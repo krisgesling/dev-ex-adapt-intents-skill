@@ -1,2 +1,2 @@
 .* about (?P<Type>.*) potatoes.*
-.*\b(make|like) (?P<Type>.*) potato
+.* (make|like) (?P<Type>.*) potato.*
