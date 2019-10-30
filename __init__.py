@@ -1,15 +1,22 @@
-from mycroft import MycroftSkill, intent_file_handler
+from adapt.intent import IntentBuilder
+from mycroft import intent_handler
 
+class PotatoSkill(MycroftSkill):
 
-class DevExAdaptIntents(MycroftSkill):
-    def __init__(self):
-        MycroftSkill.__init__(self)
+    @intent_handler(IntentBuilder('WhatIsPotato').require('What')
+                    .require('Potato'))
+    def handle_what_is(self, message):
+        self.speak_dialog('potato.description')
 
-    @intent_file_handler('intents.adapt.ex.dev.intent')
-    def handle_intents_adapt_ex_dev(self, message):
-        self.speak_dialog('intents.adapt.ex.dev')
-
+    @intent_handler(IntentBuilder('DoYouLikePotato').require('Potato')
+                    .require('Like').optionally('Type').one_of('You', 'I'))
+    def handle_do_you_like(self, message):
+        potato_type = message.data.get('Type')
+        if potato_type is not None:
+            self.speak_dialog('like.potato.type',
+                              {'type': potato_type})
+        else:
+            self.speak_dialog('like.potato.generic')
 
 def create_skill():
-    return DevExAdaptIntents()
-
+    return PotatoSkill()
