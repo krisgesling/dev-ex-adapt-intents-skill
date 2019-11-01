@@ -1,5 +1,5 @@
 from adapt.intent import IntentBuilder
-from mycroft import intent_handler
+from mycroft import MycroftSkill, intent_handler
 
 class PotatoSkill(MycroftSkill):
 
